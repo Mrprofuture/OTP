@@ -3,125 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile OTP Verification</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-        }
-        .container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            width: 300px;
-        }
-        .container h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        .otp-input {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 10px 0;
-        }
-        .otp-input input {
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            font-size: 18px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .otp-input input:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-        button:disabled {
-            background-color: #aaa;
-            cursor: not-allowed;
-        }
-        .message {
-            margin-top: 10px;
-            color: red;
-        }
-    </style>
+    <title>Verification Page</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h2>Mobile OTP Verification</h2>
-        <div id="mobile-section">
-            <input type="text" id="mobile" placeholder="Enter Mobile Number" maxlength="10">
-            <button onclick="sendOTP()">Send OTP</button>
-        </div>
-        <div id="otp-section" style="display: none;">
-            <div class="otp-input">
-                <input type="text" maxlength="1" id="digit1" oninput="moveToNext(event, 'digit2')">
-                <input type="text" maxlength="1" id="digit2" oninput="moveToNext(event, 'digit3')">
-                <input type="text" maxlength="1" id="digit3" oninput="moveToNext(event, 'digit4')">
-                <input type="text" maxlength="1" id="digit4" oninput="moveToNext(event)">
-            </div>
-            <button onclick="verifyOTP()">Verify OTP</button>
-        </div>
-        <p id="message" class="message"></p>
+        <h1>Verification Page</h1>
+        <p>Please enter the verification code sent to your email:</p>
+        <input type="text" id="verificationCode" placeholder="Enter verification code" />
+        <button id="verifyButton">Verify</button>
+        <p id="message"></p>
     </div>
 
-    <script>
-        function sendOTP() {
-            const mobile = document.getElementById("mobile").value;
-            if (mobile.length === 10 && /^[0-9]+$/.test(mobile)) {
-                alert("OTP has been sent to " + mobile);
-                document.getElementById("mobile-section").style.display = "none";
-                document.getElementById("otp-section").style.display = "block";
-                document.getElementById("message").textContent = "";
-            } else {
-                document.getElementById("message").textContent = "Please enter a valid 10-digit mobile number.";
-            }
-        }
-
-        function moveToNext(event, nextId) {
-            const input = event.target;
-            if (input.value.length === 1 && nextId) {
-                document.getElementById(nextId).focus();
-            }
-        }
-
-        function verifyOTP() {
-            const otp = Array.from(document.querySelectorAll('.otp-input input'))
-                .map(input => input.value)
-                .join('');
-            if (otp === "1234") { // Mock OTP for demonstration
-                alert("OTP Verified Successfully!");
-                document.getElementById("message").textContent = "";
-            } else {
-                document.getElementById("message").textContent = "Invalid OTP. Please try again.";
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
