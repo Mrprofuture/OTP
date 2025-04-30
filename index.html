@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+        .otp-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .otp-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .otp-input {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .otp-input input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .otp-input input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        .resend-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .resend-btn:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="otp-container">
+        <h2>OTP Verification</h2>
+        <div class="otp-input">
+            <input type="text" maxlength="1" id="digit1" oninput="moveToNext(event, 'digit2')">
+            <input type="text" maxlength="1" id="digit2" oninput="moveToNext(event, 'digit3')">
+            <input type="text" maxlength="1" id="digit3" oninput="moveToNext(event, 'digit4')">
+            <input type="text" maxlength="1" id="digit4" oninput="moveToNext(event)">
+        </div>
+        <button class="resend-btn" onclick="verifyOTP()">Verify</button>
+        <p id="message" style="color: red; margin-top: 10px;"></p>
+        <button class="resend-btn" id="resend-btn" onclick="resendOTP()" disabled>Resend OTP</button>
+    </div>
+
+    <script>
+        function moveToNext(event, nextId) {
+            const input = event.target;
+            if (input.value.length === 1 && nextId) {
+                document.getElementById(nextId).focus();
+            }
+        }
+
+        function verifyOTP() {
+            const otp = Array.from(document.querySelectorAll('.otp-input input'))
+                .map(input => input.value)
+                .join('');
+            if (otp === "1234") {
+                alert("OTP Verified Successfully!");
+                document.getElementById("message").textContent = "";
+            } else {
+                document.getElementById("message").textContent = "Invalid OTP. Please try again.";
+            }
+        }
+
+        function resendOTP() {
+            alert("OTP Resent! Check your email or mobile.");
+            const resendButton = document.getElementById("resend-btn");
+            resendButton.disabled = true;
+            setTimeout(() => {
+                resendButton.disabled = false;
+            }, 30000); // 30 seconds
+        }
+    </script>
+</body>
+</html>
